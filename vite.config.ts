@@ -8,14 +8,14 @@ export default defineConfig({
   plugins: [react()],
   server: {
     fs: {
-      allow: [r('..'), r('.')],
+      allow: [r('.')],
     },
   },
   resolve: {
     dedupe: ['react', 'react-dom', 'zustand', 'lucide-react'],
     alias: [
-      // @shared → filmmaker-pro source
-      { find: '@shared', replacement: r('../filmmaker-pro/src') },
+      // @shared → bundled copy of filmmaker-pro source (self-contained for Vercel)
+      { find: '@shared', replacement: r('src/shared') },
       // Force ALL zustand imports (from any directory) to one copy
       { find: /^zustand\/middleware$/, replacement: r('node_modules/zustand/middleware') },
       { find: /^zustand\/vanilla$/, replacement: r('node_modules/zustand/vanilla') },

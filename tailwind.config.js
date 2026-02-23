@@ -8,7 +8,7 @@ export default {
   content: [
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}',
-    path.resolve(__dirname, '../filmmaker-pro/src/**/*.{js,ts,jsx,tsx}'),
+    path.resolve(__dirname, 'src/shared/**/*.{js,ts,jsx,tsx}'),
   ],
   theme: {
     extend: {},
