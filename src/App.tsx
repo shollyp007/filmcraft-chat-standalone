@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Film, Plus } from 'lucide-react';
 import Chat from '@shared/components/Chat/Chat';
 import { useStore } from '@shared/store/useStore';
@@ -86,8 +86,20 @@ function ProjectSetup() {
 
 // ── Root app ──────────────────────────────────────────────────
 export default function App() {
-  const { projects, activeProjectId } = useStore();
+  const { projects, activeProjectId, joinProjectFromInvite } = useStore();
   const hasActiveProject = projects.some(p => p.id === activeProjectId);
+
+  // Handle invite links: ?pid=<projectId>&pname=<projectName>
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const pid = params.get('pid');
+    const pname = params.get('pname');
+    if (pid && pname) {
+      joinProjectFromInvite(pid, decodeURIComponent(pname));
+      // Clean up URL without reloading
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+  }, []);
 
   if (!hasActiveProject && projects.length === 0) {
     return <ProjectSetup />;

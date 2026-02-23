@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import {
   Hash, Lock, Send, User, ChevronDown, ChevronRight,
-  MessageSquare, Users, Film, Search, X, Smile, Wifi, WifiOff,
+  MessageSquare, Users, Film, Search, X, Smile, Wifi, WifiOff, Link,
 } from 'lucide-react';
 import { useStore } from '../../store/useStore';
 import { useChatSocket } from '../../hooks/useChatSocket';
@@ -468,6 +468,34 @@ function MemberRow({ user, isSelf, online, onClick }: {
   );
 }
 
+// ─── Invite Link Button ──────────────────────────────────────
+
+const STANDALONE_URL = 'https://film-chatbot.vercel.app';
+
+function InviteLinkButton({ projectId, projectName }: { projectId: string; projectName: string }) {
+  const [copied, setCopied] = useState(false);
+
+  function copyLink() {
+    const url = `${STANDALONE_URL}/?pid=${projectId}&pname=${encodeURIComponent(projectName)}`;
+    navigator.clipboard.writeText(url).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  }
+
+  return (
+    <button
+      onClick={copyLink}
+      title="Copy invite link"
+      className="flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-medium transition-colors flex-shrink-0
+        bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-400 hover:text-indigo-300 border border-indigo-600/30"
+    >
+      <Link size={10} />
+      {copied ? 'Copied!' : 'Invite'}
+    </button>
+  );
+}
+
 // ─── Main Chat ───────────────────────────────────────────────
 
 export default function Chat() {
@@ -531,10 +559,11 @@ export default function Chat() {
             <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center flex-shrink-0">
               <Film size={14} className="text-white" />
             </div>
-            <div className="min-w-0">
+            <div className="min-w-0 flex-1">
               <div className="text-white text-sm font-semibold truncate">{project.name}</div>
               <div className="text-[10px] text-gray-500">FilmCraft Chat</div>
             </div>
+            <InviteLinkButton projectId={project.id} projectName={project.name} />
           </div>
         </div>
 

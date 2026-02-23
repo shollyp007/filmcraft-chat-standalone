@@ -184,6 +184,7 @@ interface AppState {
   createProject: (name: string) => void;
   updateProject: (updates: Partial<Project>) => void;
   setActiveProject: (id: string) => void;
+  joinProjectFromInvite: (id: string, name: string) => void;
 
   // Script elements
   updateElements: (elements: ScriptElement[]) => void;
@@ -307,6 +308,25 @@ export const useStore = create<AppState>()(
       }))),
 
       setActiveProject: (id) => set({ activeProjectId: id }),
+
+      joinProjectFromInvite: (id, name) => {
+        const existing = get().projects.find(p => p.id === id);
+        if (existing) {
+          set({ activeProjectId: id });
+          return;
+        }
+        const script: Script = {
+          id: uuid(), title: name, author: '', scenes: [], elements: [], pageCount: 0,
+        };
+        const project: Project = {
+          id, name, script,
+          breakdownItems: [], characters: [], locations: [],
+          productionDays: [], shots: [], callSheets: [], crew: [],
+          collaborators: [],
+          createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
+        };
+        set(s => ({ projects: [...s.projects, project], activeProjectId: id }));
+      },
 
       updateElements: (elements) => set(s => updateActiveProject(s, p => {
         const scenes = buildScenesFromElements(elements);
