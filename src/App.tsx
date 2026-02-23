@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Film, Plus } from 'lucide-react';
 import Chat from '@shared/components/Chat/Chat';
 import { useStore } from '@shared/store/useStore';
+import type { Project } from '@shared/types';
 
 // ── Project setup screen (shown when no projects exist or user wants a new one) ──
 function ProjectSetup() {
@@ -30,7 +31,7 @@ function ProjectSetup() {
           <>
             <p className="text-gray-400 text-sm mb-3">Continue with an existing production:</p>
             <div className="space-y-2 mb-5">
-              {projects.map(p => (
+              {projects.map((p: Project) => (
                 <button
                   key={p.id}
                   onClick={() => setActiveProject(p.id)}
@@ -133,7 +134,7 @@ function ProjectSetupTrigger() {
       {open && (
         <div className="absolute right-0 top-full mt-1 bg-[#1a1a2e] border border-[#2d2b5b] rounded-xl p-3 w-64 shadow-2xl z-50">
           <div className="space-y-1 mb-3 max-h-40 overflow-y-auto">
-            {projects.map(p => (
+            {projects.map((p: Project) => (
               <button
                 key={p.id}
                 onClick={() => { setActiveProject(p.id); setOpen(false); }}

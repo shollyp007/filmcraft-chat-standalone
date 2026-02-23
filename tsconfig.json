@@ -15,10 +15,11 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
+    "types": ["vite/client"],
     "baseUrl": ".",
     "paths": {
-      "@shared/*": ["../filmmaker-pro/src/*"]
+      "@shared/*": ["src/shared/*"]
     }
   },
-  "include": ["src", "../filmmaker-pro/src"]
+  "include": ["src"]
 }
