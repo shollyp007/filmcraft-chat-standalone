@@ -154,12 +154,7 @@ const demoProject: Project = {
   shots: [],
   callSheets: [],
   collaborators: [],
-  crew: [
-    { id: uuid(), name: 'Alex Rivera', role: 'Director of Photography', department: 'Camera', phone: '(310) 555-0101' },
-    { id: uuid(), name: 'Sam Chen', role: '1st AD', department: 'Production', phone: '(310) 555-0102' },
-    { id: uuid(), name: 'Jordan Lee', role: 'Production Designer', department: 'Art', phone: '(310) 555-0103' },
-    { id: uuid(), name: 'Taylor Moore', role: 'Sound Mixer', department: 'Sound', phone: '(310) 555-0104' },
-  ],
+  crew: [],
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
 };
